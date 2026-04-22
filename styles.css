@@ -679,7 +679,11 @@ a {
   }
 
   .hero-content {
-    padding: 2rem 1.35rem;
+    width: min(100%, 26rem);
+    padding: 2.35rem 1.45rem;
+    margin-top: -3rem;
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
   }
 
   .hero h1 {
@@ -701,6 +705,18 @@ a {
   .parallax-band {
     min-height: 30svh;
     background-attachment: scroll;
+  }
+}
+
+@media (max-width: 720px) and (min-height: 820px) {
+  .hero-content {
+    width: min(100%, 27rem);
+    min-height: min(31rem, 58svh);
+    padding: 3rem 1.6rem;
+    margin-top: -4.25rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
 }
 
