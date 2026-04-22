@@ -680,10 +680,14 @@ a {
 
   .hero-content {
     width: min(100%, 26rem);
-    padding: 2.35rem 1.45rem;
-    margin-top: -3rem;
+    min-height: 29rem;
+    padding: 3rem 1.45rem 3.25rem;
+    margin-top: -3.6rem;
     -webkit-backdrop-filter: blur(12px);
     backdrop-filter: blur(12px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
 
   .hero h1 {
@@ -711,12 +715,9 @@ a {
 @media (max-width: 720px) and (min-height: 820px) {
   .hero-content {
     width: min(100%, 27rem);
-    min-height: min(31rem, 58svh);
-    padding: 3rem 1.6rem;
-    margin-top: -4.25rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+    min-height: min(33rem, 62svh);
+    padding: 3.35rem 1.6rem 3.6rem;
+    margin-top: -4.8rem;
   }
 }
 
