@@ -1,0 +1,806 @@
+:root {
+  --background: #f7f0e7;
+  --background-soft: #fbf7f2;
+  --foreground: #33261d;
+  --foreground-muted: rgba(51, 38, 29, 0.72);
+  --line: rgba(83, 61, 46, 0.14);
+  --accent: #8c6a4f;
+  --accent-deep: #5d3f2a;
+  --accent-soft: #dec6b4;
+  --white: #fffdf9;
+  --shadow: 0 30px 60px rgba(63, 39, 23, 0.12);
+  --hero-image: linear-gradient(
+      180deg,
+      rgba(22, 14, 9, 0.16) 0%,
+      rgba(22, 14, 9, 0.4) 100%
+    ),
+    url("./image.png");
+  --parallax-image: linear-gradient(
+      180deg,
+      rgba(49, 29, 16, 0.22) 0%,
+      rgba(49, 29, 16, 0.22) 100%
+    ),
+    url("./image2.png");
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: "Manrope", sans-serif;
+  color: var(--foreground);
+  background:
+    radial-gradient(circle at top, rgba(222, 198, 180, 0.34), transparent 34%),
+    linear-gradient(180deg, #f8f3ed 0%, #f4ece1 100%);
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.site-header {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 20;
+  padding: 1rem 1.25rem;
+}
+
+.nav {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0.85rem 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  background: rgba(35, 21, 13, 0.22);
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  color: var(--white);
+}
+
+.brand,
+.nav-links a {
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-size: 0.76rem;
+}
+
+.brand {
+  font-size: 0.92rem;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.nav-toggle {
+  display: none;
+  border: 0;
+  background: transparent;
+  padding: 0;
+  width: 2.5rem;
+  height: 2.5rem;
+  cursor: pointer;
+}
+
+.nav-toggle span {
+  display: block;
+  width: 1.5rem;
+  height: 1px;
+  margin: 0.35rem auto;
+  background: var(--white);
+  transition: transform 240ms ease, opacity 240ms ease;
+}
+
+.hero {
+  position: relative;
+  min-height: 100svh;
+  display: grid;
+  place-items: center;
+  padding: 7rem 1.5rem 4rem;
+  background-image: var(--hero-image);
+  background-position: center 24%;
+  background-size: cover;
+  background-attachment: fixed;
+  overflow: hidden;
+}
+
+.hero-overlay,
+.parallax-overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 50% 16%, rgba(255, 247, 237, 0.24), transparent 24%),
+    linear-gradient(90deg, rgba(17, 10, 7, 0.5) 0%, rgba(17, 10, 7, 0.14) 40%, rgba(17, 10, 7, 0.3) 100%),
+    linear-gradient(180deg, rgba(16, 10, 7, 0.12), rgba(16, 10, 7, 0.42));
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 1.5rem;
+  z-index: 0;
+  border: 1px solid rgba(255, 248, 240, 0.26);
+  box-shadow: inset 0 0 0 1px rgba(255, 248, 240, 0.08);
+  pointer-events: none;
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: auto auto 8% 6%;
+  width: min(34rem, 58vw);
+  height: min(34rem, 58vw);
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(219, 183, 145, 0.22), rgba(219, 183, 145, 0));
+  filter: blur(14px);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+  max-width: 760px;
+  text-align: center;
+  color: var(--white);
+  padding: 2.5rem 2.75rem;
+  border: 1px solid rgba(255, 251, 247, 0.18);
+  background: linear-gradient(180deg, rgba(41, 24, 16, 0.2), rgba(41, 24, 16, 0.12));
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+  box-shadow: 0 30px 70px rgba(18, 10, 7, 0.24);
+}
+
+.eyebrow,
+.kicker,
+.detail-label,
+.schedule-index {
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+}
+
+.hero h1,
+.section-heading h2,
+.invitation-card h3,
+.detail-card h3,
+.schedule-item h3,
+.rsvp-shell h2 {
+  font-family: "Cormorant Garamond", serif;
+  font-weight: 600;
+}
+
+.hero h1 {
+  margin: 1rem 0 1.25rem;
+  font-size: clamp(3.6rem, 9vw, 7rem);
+  line-height: 0.94;
+}
+
+.hero h1 span {
+  display: inline-block;
+  margin-inline: 0.45rem;
+  font-weight: 400;
+}
+
+.hero-copy {
+  width: min(100%, 38rem);
+  margin: 0 auto 2rem;
+  font-size: 1.08rem;
+  line-height: 1.8;
+  color: rgba(255, 253, 249, 0.94);
+  text-shadow: 0 1px 18px rgba(9, 6, 4, 0.34);
+}
+
+.hero-link,
+.primary-link,
+.secondary-link {
+  transition:
+    transform 220ms ease,
+    background-color 220ms ease,
+    border-color 220ms ease,
+    color 220ms ease;
+}
+
+.hero-link,
+.primary-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 13rem;
+  padding: 0.95rem 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  background: rgba(255, 255, 255, 0.12);
+  color: var(--white);
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-size: 0.72rem;
+}
+
+.hero-link:hover,
+.primary-link:hover,
+.secondary-link:hover {
+  transform: translateY(-2px);
+}
+
+.scroll-indicator {
+  position: absolute;
+  bottom: 1.75rem;
+  left: 50%;
+  z-index: 1;
+  width: 1.25rem;
+  height: 3rem;
+  margin-left: -0.625rem;
+  border: 1px solid rgba(255, 255, 255, 0.46);
+  border-radius: 999px;
+}
+
+.scroll-indicator span {
+  position: absolute;
+  top: 0.5rem;
+  left: 50%;
+  width: 0.3rem;
+  height: 0.3rem;
+  margin-left: -0.15rem;
+  border-radius: 999px;
+  background: var(--white);
+  animation: float 1.8s infinite ease-in-out;
+}
+
+.section {
+  padding: 6rem 1.5rem;
+}
+
+.section-heading {
+  max-width: 760px;
+  margin: 0 auto 3rem;
+  text-align: center;
+}
+
+.section-heading h2,
+.rsvp-shell h2 {
+  margin: 0.85rem 0 0;
+  font-size: clamp(2.25rem, 5vw, 4.25rem);
+  line-height: 1;
+}
+
+.kicker {
+  color: var(--accent);
+}
+
+.invitation-grid,
+.details-grid,
+.celebration-shell,
+.schedule-grid {
+  max-width: 1120px;
+  margin: 0 auto;
+}
+
+.invitation-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(280px, 0.8fr);
+  gap: 1.5rem;
+}
+
+.invitation-card,
+.quote-card,
+.detail-card,
+.schedule-item,
+.rsvp-shell {
+  background: rgba(255, 253, 249, 0.82);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow);
+}
+
+.invitation-card {
+  padding: 3rem;
+  text-align: center;
+}
+
+.guest-line-block {
+  margin: 1rem 0 0.75rem;
+}
+
+.guest-line {
+  display: block;
+  width: min(100%, 22rem);
+  margin: 0.9rem auto 1rem;
+  border-bottom: 1px solid rgba(93, 63, 42, 0.5);
+  min-height: 2rem;
+}
+
+.invitation-intro,
+.invitation-detail,
+.invitation-copy,
+.detail-card p,
+.schedule-item p,
+.rsvp p {
+  color: var(--foreground-muted);
+}
+
+.invitation-card h3 {
+  margin: 0.25rem 0;
+  font-size: 2rem;
+}
+
+.invitation-names {
+  margin: 1.4rem 0;
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(2.4rem, 5vw, 4rem);
+  color: var(--accent-deep);
+}
+
+.quote-card {
+  display: grid;
+  align-content: center;
+  padding: 2.5rem;
+  background:
+    linear-gradient(180deg, rgba(222, 198, 180, 0.5), rgba(255, 253, 249, 0.92)),
+    var(--white);
+}
+
+.quote-mark {
+  margin: 0;
+  font-family: "Cormorant Garamond", serif;
+  font-size: 5rem;
+  line-height: 0.7;
+  color: var(--accent-deep);
+}
+
+.quote-text {
+  margin: 0.5rem 0 1rem;
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1.8rem;
+  line-height: 1.2;
+}
+
+.quote-source {
+  margin: 0;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+}
+
+.parallax-band {
+  position: relative;
+  min-height: 46svh;
+  background-image: var(--parallax-image);
+  background-position: center 28%;
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+.celebration {
+  position: relative;
+}
+
+.celebration::before {
+  content: "";
+  position: absolute;
+  inset: 6rem 0 auto;
+  height: 18rem;
+  background:
+    radial-gradient(circle at center, rgba(222, 198, 180, 0.22), transparent 65%);
+  pointer-events: none;
+}
+
+.celebration-shell {
+  display: grid;
+  gap: 2rem;
+}
+
+.details-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.25rem;
+}
+
+.schedule-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.25rem;
+}
+
+.detail-card,
+.schedule-item {
+  padding: 2rem;
+}
+
+.detail-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.detail-card-photo {
+  min-height: 27rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  color: var(--white);
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.detail-card-photo::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(27, 17, 10, 0.06), rgba(27, 17, 10, 0.78));
+}
+
+.detail-card-photo > * {
+  position: relative;
+  z-index: 1;
+}
+
+.detail-card-ceremony {
+  background-image:
+    linear-gradient(180deg, rgba(36, 21, 12, 0.08), rgba(36, 21, 12, 0.44)),
+    url("./ros.jpeg");
+  background-position: center 28%;
+}
+
+.detail-card-reception {
+  background-image:
+    linear-gradient(180deg, rgba(63, 37, 24, 0.04), rgba(63, 37, 24, 0.46)),
+    url("./ross.jpeg");
+  background-position: center 24%;
+}
+
+.detail-card h3,
+.schedule-item h3 {
+  margin: 1rem 0 0.75rem;
+  font-size: 2rem;
+}
+
+.detail-meta {
+  margin: 0.75rem 0;
+  color: var(--accent-deep);
+}
+
+.detail-card-photo p,
+.detail-card-photo .detail-meta,
+.detail-card-photo .detail-footnote,
+.detail-card-photo .detail-label {
+  color: rgba(255, 250, 245, 0.92);
+}
+
+.detail-footnote {
+  font-size: 0.95rem;
+}
+
+.story-copy {
+  max-width: 46rem;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.story-copy p {
+  font-size: 1.03rem;
+  line-height: 1.85;
+}
+
+.schedule {
+  position: relative;
+}
+
+.schedule::before {
+  content: "";
+  position: absolute;
+  inset: auto 0 0;
+  height: 16rem;
+  background:
+    linear-gradient(180deg, rgba(222, 198, 180, 0), rgba(222, 198, 180, 0.28)),
+    radial-gradient(circle at center, rgba(255, 255, 255, 0.15), transparent 60%);
+  pointer-events: none;
+}
+
+.schedule-item {
+  position: relative;
+  z-index: 1;
+  padding-top: 2.6rem;
+  background:
+    linear-gradient(180deg, rgba(255, 253, 249, 0.96), rgba(245, 236, 227, 0.92)),
+    var(--white);
+  text-align: left;
+}
+
+.schedule-item::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 2rem;
+  right: 2rem;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(140, 106, 79, 0.7), transparent);
+}
+
+.schedule-index {
+  color: var(--accent);
+}
+
+.rsvp {
+  padding-top: 3rem;
+}
+
+.rsvp-shell {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 3.5rem 2rem;
+  text-align: center;
+  background:
+    linear-gradient(180deg, rgba(255, 253, 249, 0.9), rgba(246, 237, 229, 0.94)),
+    var(--white);
+}
+
+.rsvp-shell p {
+  max-width: 34rem;
+  margin: 0.75rem auto 0;
+  font-size: 1rem;
+  line-height: 1.8;
+}
+
+.rsvp-contact {
+  color: var(--accent-deep);
+}
+
+.rsvp-actions {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  margin-top: 2rem;
+}
+
+.primary-link {
+  background: var(--accent-deep);
+  border-color: var(--accent-deep);
+}
+
+.secondary-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 8rem;
+  padding: 0.95rem 1.5rem;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--foreground);
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-size: 0.72rem;
+}
+
+.site-footer {
+  padding: 2rem 1.5rem 3rem;
+  text-align: center;
+  color: var(--foreground-muted);
+}
+
+.site-footer p {
+  margin: 0.35rem 0;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 700ms ease,
+    transform 700ms ease;
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translate(-50%, 0);
+    opacity: 0.9;
+  }
+  50% {
+    transform: translate(-50%, 1rem);
+    opacity: 0.35;
+  }
+}
+
+@media (max-width: 900px) {
+  .invitation-grid,
+  .details-grid,
+  .schedule-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 720px) {
+  .site-header {
+    padding: 0.85rem;
+  }
+
+  .nav {
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .nav-toggle {
+    display: inline-block;
+  }
+
+  .nav-links {
+    display: none;
+    width: 100%;
+    padding-top: 0.75rem;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .nav-links.is-open {
+    display: flex;
+  }
+
+  .hero {
+    background-attachment: scroll;
+    background-position: center 18%;
+  }
+
+  .hero::before {
+    inset: 1rem;
+  }
+
+  .hero::after {
+    inset: auto auto 14% 50%;
+    width: 18rem;
+    height: 18rem;
+    transform: translateX(-50%);
+  }
+
+  .hero-content {
+    padding: 2rem 1.35rem;
+  }
+
+  .hero h1 {
+    font-size: clamp(3rem, 18vw, 4.5rem);
+  }
+
+  .invitation-card,
+  .quote-card,
+  .detail-card,
+  .schedule-item,
+  .rsvp-shell {
+    padding: 1.5rem;
+  }
+
+  .section {
+    padding: 4.5rem 1rem;
+  }
+
+  .parallax-band {
+    min-height: 30svh;
+    background-attachment: scroll;
+  }
+}
+
+@page {
+  size: A4 portrait;
+  margin: 10mm;
+}
+
+@media print {
+  html {
+    scroll-behavior: auto;
+  }
+
+  body {
+    background: #ffffff;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .site-header,
+  .scroll-indicator,
+  .hero-link,
+  .rsvp-actions,
+  .nav-toggle {
+    display: none !important;
+  }
+
+  .hero,
+  .parallax-band {
+    background-attachment: scroll;
+  }
+
+  .hero {
+    min-height: auto;
+    padding: 2rem 1rem 2.5rem;
+    page-break-after: always;
+    break-after: page;
+  }
+
+  .hero::before {
+    inset: 0.75rem;
+  }
+
+  .hero::after {
+    display: none;
+  }
+
+  .hero-content {
+    max-width: 100%;
+    padding: 2rem;
+    box-shadow: none;
+  }
+
+  .section,
+  .rsvp {
+    padding: 2rem 0;
+  }
+
+  .invitation,
+  .celebration,
+  .schedule,
+  .rsvp {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  .invitation-grid,
+  .details-grid,
+  .schedule-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .quote-card,
+  .detail-card,
+  .schedule-item,
+  .rsvp-shell,
+  .invitation-card {
+    box-shadow: none;
+  }
+
+  .parallax-band {
+    min-height: 9rem;
+  }
+
+  .detail-card-photo {
+    min-height: 18rem;
+  }
+
+  .rsvp-shell {
+    max-width: 100%;
+  }
+
+  .secondary-link {
+    border-color: rgba(83, 61, 46, 0.25);
+  }
+
+  .reveal,
+  .reveal.is-visible {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
