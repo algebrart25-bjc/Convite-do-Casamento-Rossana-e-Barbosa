@@ -850,6 +850,7 @@ a {
   transition: transform 200ms ease, box-shadow 200ms ease;
   display: flex;
   flex-direction: column;
+  min-width: 0;
 }
 
 .gift-card:hover {
@@ -864,10 +865,18 @@ a {
 }
 
 .gift-image {
-  height: 220px;
-  background-size: cover;
-  background-position: center;
+  height: 190px;
   border-bottom: 1px solid var(--line);
+  overflow: hidden;
+  background: #f8f2ea;
+  padding: 0.5rem;
+}
+
+.gift-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
 }
 
 .gift-content {
@@ -876,6 +885,7 @@ a {
   flex-direction: column;
   flex-grow: 1;
   justify-content: space-between;
+  min-width: 0;
 }
 
 .gift-content h4 {
@@ -883,41 +893,91 @@ a {
   font-size: 1.2rem;
   color: var(--foreground);
   font-family: "Cormorant Garamond", serif;
+  line-height: 1.15;
+  overflow-wrap: anywhere;
 }
 
 .btn-offer {
   width: 100%;
-  padding: 0.8rem 1rem;
+  min-width: 0;
+  padding: 0.82rem 0.9rem;
   cursor: pointer;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: clamp(0.68rem, 1.4vw, 0.78rem);
+  line-height: 1.1;
+  white-space: nowrap;
+  transition: all 250ms ease;
+  border-radius: 4px;
+  background: var(--accent-deep);
+  border-color: var(--accent-deep);
+  color: var(--white);
+}
+
+.btn-offer:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(93, 63, 42, 0.3);
+}
+
+.btn-offer:active {
+  transform: translateY(0);
 }
 
 button.disabled {
-  background: #d1c7bd;
-  border-color: #d1c7bd;
-  color: #fff;
+  background: #c9b8a8;
+  border-color: #c9b8a8;
+  color: rgba(255, 255, 255, 0.7);
   cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
 }
 
 @media (max-width: 600px) {
   .gifts-grid {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 1rem;
   }
+
   .gift-image {
-    height: 120px;
+    height: 110px;
+    padding: 0.35rem;
   }
+
   .gift-category-title {
     font-size: 1.8rem;
   }
+
   .gift-content {
     padding: 1rem;
   }
+
   .gift-content h4 {
     font-size: 1rem;
     margin-bottom: 1rem;
   }
+
   .btn-offer {
-    padding: 0.6rem 0.5rem;
-    font-size: 0.65rem;
+    padding: 0.65rem 0.45rem;
+    font-size: 0.66rem;
+    letter-spacing: 0.06em;
+  }
+}
+
+@media (max-width: 480px) {
+  .gift-image {
+    height: 100px;
+  }
+
+  .gifts-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .gifts-grid {
+    grid-template-columns: 1fr;
   }
 }
