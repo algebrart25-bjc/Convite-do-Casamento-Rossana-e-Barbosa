@@ -9,17 +9,13 @@
   --accent-soft: #dec6b4;
   --white: #fffdf9;
   --shadow: 0 30px 60px rgba(63, 39, 23, 0.12);
-  --hero-image: linear-gradient(
-      180deg,
+  --hero-image: linear-gradient(180deg,
       rgba(22, 14, 9, 0.16) 0%,
-      rgba(22, 14, 9, 0.4) 100%
-    ),
+      rgba(22, 14, 9, 0.4) 100%),
     url("./image.png");
-  --parallax-image: linear-gradient(
-      180deg,
+  --parallax-image: linear-gradient(180deg,
       rgba(49, 29, 16, 0.22) 0%,
-      rgba(49, 29, 16, 0.22) 100%
-    ),
+      rgba(49, 29, 16, 0.22) 100%),
     url("./image2.png");
 }
 
@@ -447,7 +443,7 @@ a {
     linear-gradient(180deg, rgba(27, 17, 10, 0.06), rgba(27, 17, 10, 0.78));
 }
 
-.detail-card-photo > * {
+.detail-card-photo>* {
   position: relative;
   z-index: 1;
 }
@@ -617,11 +613,13 @@ a {
 }
 
 @keyframes float {
+
   0%,
   100% {
     transform: translate(-50%, 0);
     opacity: 0.9;
   }
+
   50% {
     transform: translate(-50%, 1rem);
     opacity: 0.35;
@@ -629,6 +627,7 @@ a {
 }
 
 @media (max-width: 900px) {
+
   .invitation-grid,
   .details-grid,
   .schedule-grid {
@@ -819,5 +818,106 @@ a {
     opacity: 1 !important;
     transform: none !important;
     transition: none !important;
+  }
+}
+
+/* Gifts Page Styles */
+.gifts-page {
+  padding-bottom: 6rem;
+}
+
+.gifts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 2rem;
+}
+
+.gift-category-title {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 2.4rem;
+  color: var(--accent-deep);
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 0.5rem;
+}
+
+.gift-card {
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(63, 39, 23, 0.08);
+  transition: transform 200ms ease, box-shadow 200ms ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.gift-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(63, 39, 23, 0.12);
+}
+
+.gift-card.is-reserved {
+  opacity: 0.6;
+  filter: grayscale(80%);
+  pointer-events: none;
+}
+
+.gift-image {
+  height: 220px;
+  background-size: cover;
+  background-position: center;
+  border-bottom: 1px solid var(--line);
+}
+
+.gift-content {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  justify-content: space-between;
+}
+
+.gift-content h4 {
+  margin: 0 0 1.5rem 0;
+  font-size: 1.2rem;
+  color: var(--foreground);
+  font-family: "Cormorant Garamond", serif;
+}
+
+.btn-offer {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  cursor: pointer;
+}
+
+button.disabled {
+  background: #d1c7bd;
+  border-color: #d1c7bd;
+  color: #fff;
+  cursor: not-allowed;
+}
+
+@media (max-width: 600px) {
+  .gifts-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+  .gift-image {
+    height: 120px;
+  }
+  .gift-category-title {
+    font-size: 1.8rem;
+  }
+  .gift-content {
+    padding: 1rem;
+  }
+  .gift-content h4 {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+  }
+  .btn-offer {
+    padding: 0.6rem 0.5rem;
+    font-size: 0.65rem;
   }
 }
