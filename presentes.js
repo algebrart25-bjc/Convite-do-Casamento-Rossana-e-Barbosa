@@ -1,7 +1,11 @@
 const BUCKET_ID = 'B9fFv55rTTUKFDGYZN9k4a';
 const API_URL = `https://kvdb.io/${BUCKET_ID}/reservas`;
 
-// Add manual image links here when you find better matching product photos.
+/*
+  As imagens atuais vêm do LoremFlickr com palavras-chave por produto.
+  Quando quiser trocar por fotos exatas dos itens, preencha o mapa abaixo
+  com links manuais, por exemplo de lojas, catálogos ou imagens suas.
+*/
 // Example:
 // const giftImageOverrides = {
 //   c1: "https://example.com/your-image.jpg",
@@ -68,6 +72,19 @@ const giftCategories = [
 ];
 
 let state = {};
+let pendingReservation = null;
+
+function getGiftImage(item) {
+  return giftImageOverrides[item.id] || item.img;
+}
+
+function findGiftById(id) {
+  for (const category of giftCategories) {
+    const item = category.items.find((gift) => gift.id === id);
+    if (item) return item;
+  }
+  return null;
+}
 
 async function loadState() {
   try {
@@ -83,66 +100,129 @@ async function loadState() {
 
 async function saveState() {
   await fetch(API_URL, {
-    method: 'POST',
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json'
+      "Content-Type": "application/json"
     },
     body: JSON.stringify(state)
   });
 }
 
-function getGiftImage(item) {
-  return giftImageOverrides[item.id] || item.img;
+function ensureConfirmationModal() {
+  let modal = document.getElementById("gift-confirmation-modal");
+  if (modal) return modal;
+
+  modal = document.createElement("div");
+  modal.id = "gift-confirmation-modal";
+  modal.style.cssText = [
+    "position: fixed",
+    "inset: 0",
+    "display: none",
+    "align-items: center",
+    "justify-content: center",
+    "padding: 1rem",
+    "background: rgba(34, 22, 15, 0.55)",
+    "z-index: 9999"
+  ].join(";");
+
+  modal.innerHTML = `
+    <div style="width: min(100%, 360px); background: #fffdf9; border: 1px solid rgba(83, 61, 46, 0.14); border-radius: 16px; box-shadow: 0 24px 60px rgba(34, 22, 15, 0.24); padding: 1.1rem 1rem 1rem; font-family: Manrope, sans-serif;">
+      <p id="gift-confirmation-kicker" style="margin: 0 0 0.35rem; font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: #8c6a4f;">Confirmar ação</p>
+      <h3 id="gift-confirmation-title" style="margin: 0; font-family: 'Cormorant Garamond', serif; font-size: 1.9rem; line-height: 1; color: #33261d;">Título</h3>
+      <p id="gift-confirmation-message" style="margin: 0.8rem 0 1.2rem; color: rgba(51, 38, 29, 0.72); line-height: 1.55;">Mensagem</p>
+      <div style="display: flex; gap: 0.6rem; justify-content: flex-end;">
+        <button id="gift-confirmation-cancel" type="button" style="border: 1px solid rgba(83, 61, 46, 0.14); background: transparent; color: #33261d; border-radius: 10px; padding: 0.72rem 0.95rem; cursor: pointer; text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.72rem;">Cancelar</button>
+        <button id="gift-confirmation-accept" type="button" style="border: 1px solid #5d3f2a; background: #5d3f2a; color: #fffdf9; border-radius: 10px; padding: 0.72rem 0.95rem; cursor: pointer; text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.72rem;">Confirmar</button>
+      </div>
+    </div>
+  `;
+
+  document.body.appendChild(modal);
+
+  modal.addEventListener("click", (event) => {
+    if (event.target === modal) {
+      closeConfirmationModal();
+    }
+  });
+
+  document.getElementById("gift-confirmation-cancel").addEventListener("click", closeConfirmationModal);
+  document.getElementById("gift-confirmation-accept").addEventListener("click", confirmPendingReservation);
+
+  return modal;
 }
 
-async function reserveGift(id) {
+function openConfirmationModal(type, id) {
   const gift = findGiftById(id);
-  const confirmed = window.confirm(
-    `Tem certeza que deseja reservar "${gift?.name || 'este presente'}"?`
-  );
+  pendingReservation = { type, id };
 
-  if (!confirmed) return;
+  const modal = ensureConfirmationModal();
+  const title = document.getElementById("gift-confirmation-title");
+  const message = document.getElementById("gift-confirmation-message");
+  const accept = document.getElementById("gift-confirmation-accept");
 
-  state[id] = true;
-  renderGifts();
-
-  try {
-    await saveState();
-  } catch (e) {
-    console.error("Erro ao guardar reserva", e);
-    alert("Houve um erro ao tentar reservar o presente. Verifique a sua ligação.");
-    state[id] = false;
-    renderGifts();
+  if (type === "reserve") {
+    title.textContent = "Oferecer presente";
+    message.textContent = `Quer oferecer "${gift?.name || "este presente"}"? Se confirmar, o item ficará reservado para si.`;
+    accept.textContent = "Oferecer";
+  } else {
+    title.textContent = "Desfazer reserva";
+    message.textContent = `Quer desfazer a reserva de "${gift?.name || "este presente"}"? Se confirmar, o item volta a ficar disponível.`;
+    accept.textContent = "Desfazer";
   }
+
+  modal.style.display = "flex";
 }
 
-async function unreserveGift(id) {
-  const gift = findGiftById(id);
-  const confirmed = window.confirm(
-    `Deseja desfazer a reserva de "${gift?.name || 'este presente'}"?`
-  );
+function closeConfirmationModal() {
+  const modal = document.getElementById("gift-confirmation-modal");
+  if (modal) {
+    modal.style.display = "none";
+  }
+  pendingReservation = null;
+}
 
-  if (!confirmed) return;
+async function confirmPendingReservation() {
+  if (!pendingReservation) return;
 
-  state[id] = false;
-  renderGifts();
+  const { type, id } = pendingReservation;
 
-  try {
-    await saveState();
-  } catch (e) {
-    console.error("Erro ao remover reserva", e);
-    alert("Houve um erro ao tentar desfazer a reserva. Verifique a sua ligação.");
+  if (type === "reserve") {
     state[id] = true;
     renderGifts();
+
+    try {
+      await saveState();
+    } catch (e) {
+      console.error("Erro ao guardar reserva", e);
+      alert("Houve um erro ao tentar reservar o presente. Verifique a sua ligação.");
+      state[id] = false;
+      renderGifts();
+    }
   }
+
+  if (type === "unreserve") {
+    state[id] = false;
+    renderGifts();
+
+    try {
+      await saveState();
+    } catch (e) {
+      console.error("Erro ao remover reserva", e);
+      alert("Houve um erro ao tentar desfazer a reserva. Verifique a sua ligação.");
+      state[id] = true;
+      renderGifts();
+    }
+  }
+
+  closeConfirmationModal();
 }
 
-function findGiftById(id) {
-  for (const category of giftCategories) {
-    const item = category.items.find((gift) => gift.id === id);
-    if (item) return item;
-  }
-  return null;
+function reserveGift(id) {
+  openConfirmationModal("reserve", id);
+}
+
+function unreserveGift(id) {
+  openConfirmationModal("unreserve", id);
 }
 
 function renderGifts() {
@@ -151,7 +231,7 @@ function renderGifts() {
 
   container.innerHTML = "";
 
-  giftCategories.forEach(category => {
+  giftCategories.forEach((category) => {
     const catSection = document.createElement("div");
     catSection.className = "gift-category-section";
     catSection.style.marginBottom = "4rem";
@@ -164,7 +244,7 @@ function renderGifts() {
     const grid = document.createElement("div");
     grid.className = "gifts-grid";
 
-    category.items.forEach(item => {
+    category.items.forEach((item) => {
       const isReserved = state[item.id] === true;
 
       const card = document.createElement("article");
@@ -181,10 +261,10 @@ function renderGifts() {
           <h4>${item.name}</h4>
           <button
             type="button"
-            class="${isReserved ? 'secondary-link btn-unreserve' : 'primary-link btn-offer'}"
+            class="${isReserved ? "secondary-link btn-unreserve" : "primary-link btn-offer"}"
             data-id="${item.id}"
           >
-            ${isReserved ? 'Desfazer' : 'Oferecer'}
+            ${isReserved ? "Desfazer" : "Oferecer"}
           </button>
         </div>
       `;
@@ -195,14 +275,14 @@ function renderGifts() {
     container.appendChild(catSection);
   });
 
-  document.querySelectorAll(".btn-offer").forEach(btn => {
+  document.querySelectorAll(".btn-offer").forEach((btn) => {
     btn.addEventListener("click", (e) => {
       const id = e.currentTarget.getAttribute("data-id");
       reserveGift(id);
     });
   });
 
-  document.querySelectorAll(".btn-unreserve").forEach(btn => {
+  document.querySelectorAll(".btn-unreserve").forEach((btn) => {
     btn.addEventListener("click", (e) => {
       const id = e.currentTarget.getAttribute("data-id");
       unreserveGift(id);
