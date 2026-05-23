@@ -66,9 +66,9 @@ const giftCategories = [
   {
     title: "Material de Jardinagem",
     items: [
-      { id: "j1", name: "Tesoura de Pouda", alt: "Tesoura de poda", img: "https://res-console.cloudinary.com/dybll7vsv/thumbnails/transform/v1/image/upload/Y19maWxsLGhfMjAwLHdfMjAw/v1/vassoura-de-limpeza-polipropileno-cinzento-140-cm-com-cabide_9174101_1400x1400_cv0p7i/template_primary" },
-      { id: "j2", name: "Cortador de relva", alt: "Cortador de relva", img: "https://res-console.cloudinary.com/dybll7vsv/thumbnails/transform/v1/image/upload/Y19maWxsLGhfMjAwLHdfMjAw/v1/ESFREGONA-MICROFIBRA-C/107355013_z2k0g4.jpg/template_primary" },
-      { id: "j3", name: "Escadote", alt: "Escadote", img: "https://res-console.cloudinary.com/dybll7vsv/thumbnails/transform/v1/image/upload/Y19maWxsLGhfMjAwLHdfMjAw/v1/pá-de-lixo-retangular-plástica-1060620_w0qf8t.jpg/template_primary" },
+      { id: "j1", name: "Tesoura de Pouda", alt: "Tesoura de poda", img: "https://res.cloudinary.com/dybll7vsv/image/upload/v1779539435/78331125PDM001G_hahhad.jpg" },
+      { id: "j2", name: "Cortador de relva", alt: "Cortador de relva", img: "https://res-console.cloudinary.com/dybll7vsv/thumbnails/transform/v1/image/upload/Y19maWxsLGhfMjAwLHdfMjAw/v1/a3MtYnN0LTQwdl8wMV9lbWh6aXk=/template_primary" },
+      { id: "j3", name: "Escadote", alt: "Escadote", img: "https://res.cloudinary.com/dybll7vsv/image/upload/v1779541027/escadote-aluminio-2x6-degraus-max-300mts_jshvwe.jpg" },
     ]
   }
 ];
