@@ -34,7 +34,7 @@ const giftCategories = [
     title: "Móveis e Organização",
     items: [
       { id: "m5", name: "Coluna JBL", alt: "Coluna JBL", img: "https://res-console.cloudinary.com/dybll7vsv/thumbnails/transform/v1/image/upload/Y19maWxsLGhfMjAwLHdfMjAw/v1/NzE1Q2VGcC03TkwuX0FDX1VGMTAwMF8xMDAwX1FMODBfX3VucWNxdw==/template_primary" },
-      { id: "m1", name: "Cadeira dobrável", alt: "Cadeira dobrável", img: "https://res-console.cloudinary.com/dybll7vsv/thumbnails/transform/v1/image/upload/Y19maWxsLGhfMjAwLHdfMjAw/v1/Y2FkZWlyYS1kb2JyYXZlbC1ydXN0aWNhLWNhc3RhbmhvLWRlLW1hZGVpcmEtY29tLWVzdG9mYWRvLWJyYW5jby1tYWdhemluZS1kZWNvci0yX2dmZ3VzdQ==/template_primary" },
+      { id: "m1", name: "Cadeiras", alt: "Cadeiras", img: "https://res-console.cloudinary.com/dybll7vsv/thumbnails/transform/v1/image/upload/Y19maWxsLGhfMjAwLHdfMjAw/v1/Y2FkZWlyYS1kb2JyYXZlbC1ydXN0aWNhLWNhc3RhbmhvLWRlLW1hZGVpcmEtY29tLWVzdG9mYWRvLWJyYW5jby1tYWdhemluZS1kZWNvci0yX2dmZ3VzdQ==/template_primary" },
       { id: "m2", name: "Mesa dobrável", alt: "Mesa dobrável", img: "https://res-console.cloudinary.com/dybll7vsv/thumbnails/transform/v1/image/upload/Y19maWxsLGhfMjAwLHdfMjAw/v1/bWVzYWRvYnJhdmVscG9ydGF0aWx2aXJhbWFsZXRhMTgwbWNhbXBpbmdwcmFpYV8xMDIwNjcwOTJfeXNxN3Zy/template_primary" },
       { id: "m3", name: "Armário de louça", alt: "Armário para louça", img: "https://res-console.cloudinary.com/dybll7vsv/thumbnails/transform/v1/image/upload/Y19maWxsLGhfMjAwLHdfMjAw/v1/aW1hZ2VzX2l2aTBlcg==/template_primary" },
       { id: "m4", name: "Estantes organizadoras", alt: "Estantes organizadoras", img: "https://res-console.cloudinary.com/dybll7vsv/thumbnails/transform/v1/image/upload/Y19maWxsLGhfMjAwLHdfMjAw/v1/MS1lNTBiYzBjMDk0YzY1NzE0ZTUxNzU3MzU5ODE1MTQyNy0xMDI0LTEwMjRfZnRtbndk/template_primary" }
