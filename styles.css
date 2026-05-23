@@ -448,6 +448,35 @@ a {
   z-index: 1;
 }
 
+.detail-map-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1.25rem;
+  padding: 0.72rem 1.4rem;
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  background: rgba(255, 255, 255, 0.12);
+  color: var(--white);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: 0.7rem;
+  border-radius: 4px;
+  transition: all 220ms ease;
+  width: fit-content;
+  z-index: 2;
+  font-weight: 500;
+}
+
+.detail-map-link:hover {
+  background: rgba(255, 255, 255, 0.28);
+  border-color: rgba(255, 255, 255, 0.85);
+  transform: translateY(-2px);
+}
+
+.detail-map-link:active {
+  transform: translateY(0);
+}
+
 .detail-card-ceremony {
   background-image:
     linear-gradient(180deg, rgba(36, 21, 12, 0.08), rgba(36, 21, 12, 0.44)),
