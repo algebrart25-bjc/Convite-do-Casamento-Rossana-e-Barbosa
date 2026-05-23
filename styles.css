@@ -970,14 +970,4 @@ button.disabled {
   .gift-image {
     height: 100px;
   }
-
-  .gifts-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-@media (max-width: 480px) {
-  .gifts-grid {
-    grid-template-columns: 1fr;
-  }
 }
