@@ -1,6 +1,10 @@
 const BUCKET_ID = 'B9fFv55rTTUKFDGYZN9k4a';
 const API_URL = `https://kvdb.io/${BUCKET_ID}/reservas`;
 
+// Intervalo de atualização automática (em milissegundos)
+const REFRESH_INTERVAL = 5000; // 5 segundos
+
+let refreshTimer = null;
 
 const giftImageOverrides = {};
 
@@ -92,12 +96,37 @@ async function loadState() {
   try {
     const response = await fetch(API_URL);
     if (response.ok) {
-      state = await response.json();
+      const data = await response.json();
+      // Mesclar com o estado atual para não perder reservas locais
+      state = { ...state, ...data };
     }
   } catch (e) {
     console.error("Erro ao carregar estado", e);
   }
   renderGifts();
+}
+
+// Função para atualizar o estado periodicamente
+function startAutoRefresh() {
+  if (refreshTimer) clearInterval(refreshTimer);
+  
+  refreshTimer = setInterval(async () => {
+    try {
+      const response = await fetch(API_URL);
+      if (response.ok) {
+        const newState = await response.json();
+        // Verificar se há mudanças no estado
+        const hasChanges = JSON.stringify(newState) !== JSON.stringify(state);
+        if (hasChanges) {
+          state = newState;
+          renderGifts();
+          console.log("Estado atualizado automaticamente");
+        }
+      }
+    } catch (e) {
+      console.error("Erro ao atualizar estado automaticamente", e);
+    }
+  }, REFRESH_INTERVAL);
 }
 
 async function saveState() {
@@ -292,4 +321,7 @@ function renderGifts() {
   });
 }
 
-document.addEventListener("DOMContentLoaded", loadState);
+document.addEventListener("DOMContentLoaded", () => {
+  loadState();
+  startAutoRefresh();
+});
