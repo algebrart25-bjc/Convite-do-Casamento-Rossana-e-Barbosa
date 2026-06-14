@@ -1,0 +1,5 @@
+- [ ] Corrigir `presentes.js` (erro de sintaxe e substituir KVDB por Firestore por completo)
+- [ ] Corrigir `presentes.js` remoção de `startAutoRefresh` (ou adaptar para Firestore)
+- [ ] Validar que `presentes.html` injeta `window.__FIREBASE_DB__` corretamente
+- [ ] Garantir que `saveState()` usa Firestore e não KVDB
+- [ ] Testar abrindo `presentes.html` no browser e reservar/desfazer itens
